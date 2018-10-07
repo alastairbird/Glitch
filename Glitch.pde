@@ -11,7 +11,8 @@ boolean fileHasBeenSaved = false;
 int blackValue = -16000000;
 int brightnessValue = 30;
 int whiteValue = -13000000;
-int sortMode = 1;
+int sortMode;
+int randomInt;
 
 // Image file
 String imgFileName = "something";
@@ -26,31 +27,36 @@ void setup() {
   surface.setSize(img.width, img.height);
   // load image onto surface - scale to the available width,height for display
   image(img, 0, 0, width, height);
+
+  randomiseVariables();
 }
 
-void keyPressed() {
-  if(fileHasBeenSaved)
-  {
-    System.exit(0);
-  }
+void randomiseVariables() {
+  row = 0;
+  column = 0;
+  sortMode = int(random(0,2));
+  brightnessValue = int(random(0,100));
 }
 
 void mouseClicked() {
-  if(fileHasBeenSaved)
-  {
-    System.exit(0);
-  }
+  fileHasBeenSaved = false;
+  img = loadImage(imgFileName+"."+fileType);
+  randomiseVariables();
 }
 
 void draw() {
   handlePixelSorting();
   
   if(!fileHasBeenSaved && frameCount >= loops) {
-    img.save(imgFileName+"_"+sortMode+".png");
+    randomInt = int(random(0,999));
+    img.save(imgFileName+"_"+sortMode+"_"+randomInt+".png");
     fileHasBeenSaved = true;
     println("fileHasBeenSaved "+frameCount+" Frame(s)");
-    println("Click or press any key to exit...");
   }
+
+  // load updated image onto surface and scale to fit the display width,height
+  img = loadImage(imgFileName+"_"+sortMode+"_"+randomInt+".png");
+  image(img, 0, 0, width, height);
 }
 
 void handlePixelSorting() {
@@ -71,9 +77,6 @@ void handlePixelSorting() {
     row++;
     img.updatePixels();
   }
-  
-  // load updated image onto surface and scale to fit the display width,height
-  image(img, 0, 0, width, height);
 }
 
 void sortRow() {
