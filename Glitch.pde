@@ -8,15 +8,16 @@ boolean fileHasBeenSaved = false;
 
 //------------------------------------Vars
 // threshold values to determine sorting start and end pixels
-int blackValue = -16000000;
-int brightnessValue = 30;
-int whiteValue = -13000000;
+int blackValue = -1600000;
+int brightnessValue = 900;
+int whiteValue = -1300000;
 int sortMode;
 int randomInt;
+int count = 0;
 
 // Image file
-String imgFileName = "something";
-String fileType = "jpg";
+String imgFileName = "testing";
+String fileType = "png";
 
 void setup() {
   img = loadImage(imgFileName+"."+fileType);
@@ -34,8 +35,11 @@ void setup() {
 void randomiseVariables() {
   row = 0;
   column = 0;
-  sortMode = int(random(0,2));
-  brightnessValue = int(random(0,100));
+  sortMode = int(random(0,3));
+  whiteValue = int(random(-13000000, 0));
+  blackValue = int(random(-16000000, 0));
+  brightnessValue = int(random(0,900));
+  count++;
 }
 
 void mouseClicked() {
@@ -49,13 +53,13 @@ void draw() {
   
   if(!fileHasBeenSaved && frameCount >= loops) {
     randomInt = int(random(0,999));
-    img.save(imgFileName+"_"+sortMode+"_"+randomInt+".png");
+    img.save(imgFileName+"_"+sortMode+"_"+count+".png");
     fileHasBeenSaved = true;
     println("fileHasBeenSaved "+frameCount+" Frame(s)");
   }
 
   // load updated image onto surface and scale to fit the display width,height
-  img = loadImage(imgFileName+"_"+sortMode+"_"+randomInt+".png");
+  img = loadImage(imgFileName+"_"+sortMode+"_"+count+".png");
   image(img, 0, 0, width, height);
 }
 
