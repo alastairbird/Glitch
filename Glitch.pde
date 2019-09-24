@@ -16,7 +16,7 @@ int randomInt;
 int count = 0;
 
 // Image file
-String imgFileName = "testing";
+String imgFileName = "yoasting";
 String fileType = "png";
 
 void setup() {
@@ -38,7 +38,7 @@ void randomiseVariables() {
   sortMode = int(random(0,3));
   whiteValue = int(random(-13000000, 0));
   blackValue = int(random(-16000000, 0));
-  brightnessValue = int(random(0,900));
+  brightnessValue = int(random(255,260));
   count++;
 }
 
@@ -55,6 +55,7 @@ void draw() {
     randomInt = int(random(0,999));
     img.save(imgFileName+"_"+sortMode+"_"+count+".png");
     fileHasBeenSaved = true;
+    println("bright value" + brightnessValue);
     println("fileHasBeenSaved "+frameCount+" Frame(s)");
   }
 
